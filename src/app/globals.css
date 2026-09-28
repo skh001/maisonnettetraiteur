@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ivory: #faf7f2;
+  --color-linen: #f3ece1;
+  --color-sand: #e6dac7;
+  --color-stone: #cbbca5;
+  --color-taupe: #6b635a;
+  --color-ink: #2b2723;
+  --color-charcoal: #1f1d1b;
+  --color-gold: #c2a36b;
+  --color-gold-soft: #dcc79e;
+  --color-gold-deep: #7e6233;
+
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --shadow-luxe: 0 30px 80px -40px rgb(31 29 27 / 0.35);
+  --shadow-luxe-lg: 0 50px 120px -50px rgb(31 29 27 / 0.45);
+
+  --animate-marquee: marquee var(--marquee-duration, 70s) linear infinite;
+  --animate-hero-zoom: hero-zoom 3.2s var(--ease-luxe) both;
+  --animate-scroll-cue: scroll-cue 2.6s var(--ease-luxe) infinite;
+
+  @keyframes marquee {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
+  }
+  @keyframes hero-zoom {
+    from { transform: scale(1.08); }
+    to { transform: scale(1); }
+  }
+  @keyframes scroll-cue {
+    0% { transform: scaleY(0); transform-origin: top; }
+    45% { transform: scaleY(1); transform-origin: top; }
+    55% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+}
+
+@theme inline {
+  --font-serif: var(--font-display), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    background: var(--color-ivory);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+  body {
+    color: var(--color-ink);
+    font-feature-settings: "kern", "liga";
+  }
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+  ::selection { background: var(--color-gold-soft); color: var(--color-charcoal); }
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+  button { cursor: pointer; }
+}
+
+@layer components {
+  .skip-link {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+    z-index: 200;
+    transform: translateY(-200%);
+    background: var(--color-charcoal);
+    color: var(--color-ivory);
+    padding: 0.75rem 1.25rem;
+    font-size: 0.875rem;
+    transition: transform 0.3s var(--ease-luxe);
+  }
+  .skip-link:focus { transform: none; }
+
+  /* L'arche : motif signature, clin d'œil aux portes et fenêtres des riads. */
+  .arch { border-radius: 999px 999px 0 0; }
+  .arch-sm { border-radius: 12rem 12rem 0 0; }
+
+  /* Fond ambiant : dégradés flous et formes organiques, uniquement des transformations (GPU). */
+  .ambient {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .ambient__blob {
+    position: absolute;
+    border-radius: 50%;
+    will-change: transform;
+  }
+  .ambient__blob--a {
+    width: 70vmax; height: 70vmax; top: -25vmax; left: -20vmax;
+    background: radial-gradient(closest-side, rgb(220 199 158 / 0.32), transparent);
+    animation: drift-a 55s ease-in-out infinite alternate;
+  }
+  .ambient__blob--b {
+    width: 60vmax; height: 60vmax; bottom: -25vmax; right: -18vmax;
+    background: radial-gradient(closest-side, rgb(230 218 199 / 0.7), transparent);
+    animation: drift-b 65s ease-in-out infinite alternate;
+  }
+  .ambient__blob--c {
+    width: 40vmax; height: 40vmax; top: 35%; left: 45%;
+    background: radial-gradient(closest-side, rgb(194 163 107 / 0.12), transparent);
+    animation: drift-c 80s ease-in-out infinite alternate;
+  }
+  .ambient__shape {
+    position: absolute;
+    color: var(--color-gold);
+    opacity: 0.22;
+    will-change: transform;
+  }
+  .ambient__shape--a { width: 34vmax; top: 18%; right: -8vmax; animation: float-a 90s linear infinite; }
+  .ambient__shape--b { width: 26vmax; bottom: 6%; left: -6vmax; animation: float-b 110s linear infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    .ambient * { animation: none !important; }
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+@utility mask-fade-x {
+  mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+}
+
+/* Fond lin aux bords fondus : les sections s'enchaînent sans rupture nette. */
+@utility bg-linen-fade {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgb(243 236 225 / 0.8) 9rem,
+    rgb(243 236 225 / 0.8) calc(100% - 9rem),
+    transparent
+  );
+}
+
+/* Motif d'arches en filigrane, rappel du logo. */
+@utility pattern-arches {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='72' viewBox='0 0 56 72'%3E%3Cpath d='M12 60V30a16 16 0 0 1 32 0v30' fill='none' stroke='%23c2a36b' stroke-width='0.7' opacity='0.35'/%3E%3C/svg%3E");
+  background-size: 56px 72px;
+}
+
+@keyframes drift-a {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(9vw, 7vh, 0) scale(1.08); }
+  100% { transform: translate3d(-3vw, 14vh, 0) scale(0.95); }
+}
+@keyframes drift-b {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-10vw, -8vh, 0) scale(1.1); }
+  100% { transform: translate3d(4vw, -14vh, 0) scale(1); }
+}
+@keyframes drift-c {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-18vw, 12vh, 0); }
+}
+@keyframes float-a {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(-4vw, 6vh, 0) rotate(180deg); }
+  100% { transform: translate3d(0, 0, 0) rotate(360deg); }
+}
+@keyframes float-b {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(5vw, -5vh, 0) rotate(-180deg); }
+  100% { transform: translate3d(0, 0, 0) rotate(-360deg); }
+}
