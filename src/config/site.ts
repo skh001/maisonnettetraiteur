@@ -23,8 +23,8 @@ export const siteConfig = {
     "baghrir",
   ],
   contact: {
-    phone: "+33600000000", // TODO
-    phoneDisplay: "06 00 00 00 00", // TODO
+    phone: "+33785688701",
+    phoneDisplay: "07 85 68 87 01",
     /** Lien WhatsApp Business (message pré-rempli configuré dans l'application). */
     whatsapp: "https://wa.me/message/JDVNLZ26MRLFK1",
     email: "contact@maisonnette-traiteur.fr",
