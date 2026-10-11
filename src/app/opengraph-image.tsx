@@ -12,7 +12,7 @@ export const contentType = "image/jpeg";
 export default async function OpengraphImage() {
   const hero = await getHeroImage();
   if (hero) {
-    const file = path.join(process.cwd(), "public", decodeURIComponent(hero.src));
+    const file = path.join(process.cwd(), "public", decodeURIComponent(hero.src.split("?")[0]));
     const buffer = await sharp(file)
       .rotate()
       .resize(size.width, size.height, { fit: "cover" })

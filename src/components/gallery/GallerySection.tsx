@@ -78,9 +78,11 @@ export function GallerySection({ gallery, tinted = false }: { gallery: CategoryG
                     <span aria-hidden="true" className="pattern-arches absolute inset-0 opacity-40" />
                     <span className="relative px-8">
                       <span aria-hidden="true" className="block font-serif text-[7rem] font-light italic leading-none text-gold/70">
-                        {gallery.title.charAt(0)}
+                        {gallery.title.replace(/^(les|la|le|l[’'])\s*/i, "").charAt(0).toUpperCase()}
                       </span>
-                      <span className="mt-4 block text-[0.7rem] uppercase tracking-[0.32em] text-gold-soft">Sur commande</span>
+                      <span className="mt-4 block text-[0.7rem] uppercase leading-relaxed tracking-[0.32em] text-gold-soft">
+                        Les réalisations seront bientôt disponibles.
+                      </span>
                     </span>
                   </div>
                 )}

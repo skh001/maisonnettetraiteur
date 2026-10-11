@@ -11,12 +11,12 @@ import { JsonLd } from "@/components/seo/JsonLd";
 export const metadata = pageMetadata({
   title: "Galerie",
   description:
-    "Entrées, plats, desserts, buffets, gâteaux marocains et sélections salées : les créations de Maisonnette Traiteur en images.",
+    "Entrées, plats principaux, desserts, commandes à emporter, buffets, animations, assise de thé et gâteaux marocains : les créations faites maison de Maisonnette Traiteur en images.",
   path: "/galerie",
 });
 
 export default async function GalleryPage() {
-  // Toutes les catégories sont présentées ; celles sans photo affichent seulement leur carte.
+  // Toutes les catégories sont présentées ; celles sans photo affichent un emplacement « bientôt disponible ».
   const galleries = await getGalleries();
   const hero =
     galleries.find((g) => g.slug === "gateaux-marocains")?.images[0] ?? galleries.find((g) => g.images.length)?.images[0];
@@ -38,7 +38,7 @@ export default async function GalleryPage() {
         </>
       ) : (
         <p className={`${container} py-32 text-center text-taupe`}>
-          Ajoutez des photos dans les dossiers de <code>public/images</code> pour remplir la galerie.
+          Ajoutez des photos dans les dossiers de <code>public/images/gallery</code> pour remplir la galerie.
         </p>
       )}
 

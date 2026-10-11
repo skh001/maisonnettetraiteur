@@ -28,7 +28,7 @@ export default async function ServicesPage() {
       <PageHero
         title="Nos services"
         image={hero}
-        intro="Du dîner intime au mariage de cinq cents invités, nous adaptons le menu, le service et les animations à votre réception."
+        intro="Du dîner intime au grand mariage, nous adaptons le menu, le service et les animations à chaque réception, selon vos besoins."
       />
 
       <section aria-label="Prestations" className="py-20 md:py-32">

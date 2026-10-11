@@ -1,7 +1,9 @@
-import { testimonials } from "@/config/content";
+import { googleReviewsUrl, testimonials } from "@/data/testimonials";
 import { container, cn } from "@/lib/utils";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { StaggerItem, StaggerList } from "@/components/ui/Reveal";
+import { Reveal, StaggerItem, StaggerList } from "@/components/ui/Reveal";
+import { buttonClasses } from "@/components/ui/Button";
+import { ArrowIcon } from "@/components/ui/Icons";
 
 export function Testimonials() {
   return (
@@ -13,7 +15,7 @@ export function Testimonials() {
           tone="dark"
           split
           title="Ils nous ont confié leur table"
-          intro="Mariages, anniversaires, soirées d'entreprise : quelques mots de ceux que nous avons reçus."
+          intro="Mariages, buffets de Noël, repas d'entreprise : quelques mots de ceux que nous avons reçus."
         />
       </div>
       <StaggerList
@@ -42,6 +44,12 @@ export function Testimonials() {
           </StaggerItem>
         ))}
       </StaggerList>
+      <Reveal className={cn(container, "mt-12 flex justify-center md:mt-16")}>
+        <a href={googleReviewsUrl} target="_blank" rel="noopener noreferrer" className={buttonClasses("outline-light")}>
+          Voir tous nos avis Google
+          <ArrowIcon className="size-4" />
+        </a>
+      </Reveal>
     </section>
   );
 }

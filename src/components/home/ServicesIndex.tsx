@@ -44,7 +44,7 @@ export async function ServicesIndex() {
             id="services-index-title"
             eyebrow="Nos prestations"
             title="Pour chaque occasion"
-            intro="Une même cuisine, adaptée à votre réception : repas servi, buffet, cocktail ou table du thé."
+            intro="Une même cuisine, adaptée à votre réception : repas servi, buffet, cocktail ou l’assise de thé."
           />
           <StaggerList className="mt-10 grid border-t border-charcoal/12 sm:grid-cols-2 sm:gap-x-10 md:mt-12">
             {services.map((s) => (

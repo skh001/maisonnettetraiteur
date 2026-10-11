@@ -7,7 +7,7 @@ import { Reveal, StaggerItem, StaggerList } from "@/components/ui/Reveal";
 import { TextLink } from "@/components/ui/Button";
 
 const INTRO =
-  "Nos animations culinaires transforment un buffet en moment partagé. Chaque stand est tenu par notre équipe et préparé à la minute.";
+  "Nos animations culinaires transforment un buffet en moment partagé. Chaque stand est tenu par notre équipe et préparé à la minute, avec des recettes faites maison.";
 
 export async function Stations({ title = "Des stands cuisinés devant vos invités" }: { title?: string }) {
   const items = await Promise.all(

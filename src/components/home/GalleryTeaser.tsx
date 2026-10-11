@@ -27,7 +27,7 @@ export async function GalleryTeaser() {
           eyebrow="Notre carte"
           split
           title="La table, par univers"
-          intro="Des entrées aux gâteaux marocains, chaque univers se compose selon votre réception. Toutes les photos viennent de nos événements."
+          intro="Des entrées aux gâteaux marocains, tout est fait maison et se compose selon votre réception. Toutes les photos viennent de nos événements."
         />
         <StaggerList className="mt-14 grid auto-rows-[46vw] grid-cols-2 gap-3 sm:auto-rows-[32vw] md:mt-20 md:gap-5 lg:auto-rows-[min(20vw,300px)] lg:grid-cols-4">
           {galleries.map((g, i) => {
