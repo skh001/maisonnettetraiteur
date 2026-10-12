@@ -1,13 +1,29 @@
 "use client";
 
-import { useActionState, useEffect, useRef, type ReactNode } from "react";
-import { useFormStatus } from "react-dom";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { services } from "@/config/content";
-import { sendContactRequest, type ContactState } from "@/app/contact/actions";
+import {
+  readContactValues,
+  submitContact,
+  validateContact,
+  WEB3FORMS_ACCESS_KEY,
+  WEB3FORMS_ENDPOINT,
+  type ContactErrors,
+  type ContactField,
+} from "@/lib/contact";
 import { buttonClasses } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
-const initialState: ContactState = { status: "idle", attempt: 0 };
+type ContactState = {
+  status: "idle" | "success" | "error";
+  message?: string;
+  errors?: ContactErrors;
+};
+
+const SUCCESS_MESSAGE =
+  "Merci ! Nous revenons vers vous rapidement pour parler de votre événement. Pour une date proche, n'hésitez pas à nous appeler.";
+const ERROR_MESSAGE = "Une erreur est survenue. Veuillez réessayer.";
+const INVALID_MESSAGE = "Certains champs sont à compléter.";
 
 const fieldClass =
   "mt-2 block w-full border-0 border-b border-charcoal/20 bg-transparent px-0 py-3 text-base text-charcoal placeholder:text-taupe/60 transition-colors focus:border-gold-deep focus:outline-none focus:ring-0 aria-[invalid=true]:border-red-700";
@@ -40,8 +56,7 @@ function Field({
   );
 }
 
-function SubmitButton() {
-  const { pending } = useFormStatus();
+function SubmitButton({ pending }: { pending: boolean }) {
   return (
     <button type="submit" disabled={pending} className={buttonClasses("gold", "w-full disabled:opacity-60 sm:w-auto")}>
       {pending ? "Envoi en cours…" : "Envoyer ma demande"}
@@ -50,25 +65,64 @@ function SubmitButton() {
 }
 
 export function ContactForm() {
-  const [state, action] = useActionState(sendContactRequest, initialState);
+  const [state, setState] = useState<ContactState>({ status: "idle" });
+  const [pending, setPending] = useState(false);
   const eventRef = useRef<HTMLSelectElement>(null);
   const statusRef = useRef<HTMLDivElement>(null);
-  const values = state.values ?? {};
+  const requestRef = useRef<AbortController | null>(null);
   const errors = state.errors ?? {};
 
   // Pré-sélection depuis les pages services : /contact?evenement=mariage
   useEffect(() => {
     const preset = new URLSearchParams(window.location.search).get("evenement");
-    if (preset && eventRef.current && !values.event && services.some((s) => s.slug === preset)) {
+    if (preset && eventRef.current && services.some((s) => s.slug === preset)) {
       eventRef.current.value = preset;
     }
-  }, [values.event]);
+  }, []);
 
   useEffect(() => {
     if (state.status !== "idle") statusRef.current?.focus();
   }, [state]);
 
-  const describe = (name: keyof NonNullable<ContactState["errors"]>) => ({
+  // Annule un envoi en cours si la page est quittée.
+  useEffect(() => () => requestRef.current?.abort(), []);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (requestRef.current) return; // Un envoi est déjà en cours.
+    const form = event.currentTarget;
+    const data = new FormData(form);
+
+    // Champ piège rempli : robot, on simule un succès sans rien envoyer.
+    if (data.get("website") || data.get("botcheck")) {
+      form.reset();
+      setState({ status: "success", message: SUCCESS_MESSAGE });
+      return;
+    }
+
+    const values = readContactValues(data);
+    const fieldErrors = validateContact(values);
+    if (Object.keys(fieldErrors).length) {
+      setState({ status: "error", message: INVALID_MESSAGE, errors: fieldErrors });
+      return;
+    }
+
+    const request = new AbortController();
+    requestRef.current = request;
+    setPending(true);
+    try {
+      const sent = await submitContact(values, request.signal);
+      if (sent) form.reset();
+      setState(sent ? { status: "success", message: SUCCESS_MESSAGE } : { status: "error", message: ERROR_MESSAGE });
+    } catch {
+      if (!request.signal.aborted) setState({ status: "error", message: ERROR_MESSAGE });
+    } finally {
+      if (!request.signal.aborted) setPending(false);
+      requestRef.current = null;
+    }
+  }
+
+  const describe = (name: ContactField) => ({
     "aria-invalid": errors[name] ? true : undefined,
     "aria-describedby": errors[name] ? `${name}-erreur` : undefined,
   });
@@ -83,7 +137,7 @@ export function ContactForm() {
   }
 
   return (
-    <form key={state.attempt} action={action} noValidate className="grid gap-8 sm:grid-cols-2">
+    <form action={WEB3FORMS_ENDPOINT} method="POST" onSubmit={handleSubmit} noValidate className="grid gap-8 sm:grid-cols-2">
       <div
         ref={statusRef}
         tabIndex={-1}
@@ -94,16 +148,16 @@ export function ContactForm() {
       </div>
 
       <Field name="name" label="Nom et prénom" error={errors.name}>
-        <input id="name" name="name" autoComplete="name" required defaultValue={values.name} className={fieldClass} {...describe("name")} />
+        <input id="name" name="name" autoComplete="name" required className={fieldClass} {...describe("name")} />
       </Field>
       <Field name="phone" label="Téléphone" error={errors.phone}>
-        <input id="phone" name="phone" type="tel" autoComplete="tel" required defaultValue={values.phone} className={fieldClass} {...describe("phone")} />
+        <input id="phone" name="phone" type="tel" autoComplete="tel" required className={fieldClass} {...describe("phone")} />
       </Field>
       <Field name="email" label="E-mail" error={errors.email}>
-        <input id="email" name="email" type="email" autoComplete="email" required defaultValue={values.email} className={fieldClass} {...describe("email")} />
+        <input id="email" name="email" type="email" autoComplete="email" required className={fieldClass} {...describe("email")} />
       </Field>
       <Field name="event" label="Type d'événement" error={errors.event}>
-        <select id="event" name="event" ref={eventRef} required defaultValue={values.event ?? ""} className={fieldClass} {...describe("event")}>
+        <select id="event" name="event" ref={eventRef} required defaultValue="" className={fieldClass} {...describe("event")}>
           <option value="" disabled>
             Choisir…
           </option>
@@ -116,10 +170,10 @@ export function ContactForm() {
         </select>
       </Field>
       <Field name="date" label="Date de l'événement" error={errors.date}>
-        <input id="date" name="date" type="date" defaultValue={values.date} className={fieldClass} {...describe("date")} />
+        <input id="date" name="date" type="date" className={fieldClass} {...describe("date")} />
       </Field>
       <Field name="guests" label="Nombre d'invités" error={errors.guests}>
-        <input id="guests" name="guests" type="number" inputMode="numeric" min={1} defaultValue={values.guests} className={fieldClass} {...describe("guests")} />
+        <input id="guests" name="guests" type="number" inputMode="numeric" min={1} className={fieldClass} {...describe("guests")} />
       </Field>
       <Field name="message" label="Votre projet" error={errors.message} className="sm:col-span-2">
         <textarea
@@ -127,17 +181,20 @@ export function ContactForm() {
           name="message"
           rows={5}
           required
-          defaultValue={values.message}
+         
           placeholder="Lieu, formule souhaitée (buffet, repas servi, cocktail), animations, contraintes alimentaires…"
           className={cn(fieldClass, "resize-y")}
           {...describe("message")}
         />
       </Field>
 
-      {/* Champ piège anti-spam, invisible pour les humains. */}
+      {/* Anti-spam, invisible pour les humains : champ piège + case « botcheck » de Web3Forms. */}
       <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
         <label htmlFor="website">Site web</label>
         <input id="website" name="website" tabIndex={-1} autoComplete="off" />
+        <input type="checkbox" name="botcheck" tabIndex={-1} className="hidden" />
+        {/* Envoi sans JavaScript : le navigateur poste directement à Web3Forms. */}
+        <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
       </div>
 
       <div className="sm:col-span-2">
@@ -146,7 +203,6 @@ export function ContactForm() {
             type="checkbox"
             name="consent"
             required
-            defaultChecked={values.consent === "on"}
             className="mt-1 size-4 shrink-0 accent-gold-deep"
             {...describe("consent")}
           />
@@ -163,7 +219,7 @@ export function ContactForm() {
       </div>
 
       <div className="sm:col-span-2">
-        <SubmitButton />
+        <SubmitButton pending={pending} />
       </div>
     </form>
   );

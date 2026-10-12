@@ -73,7 +73,10 @@ export function Footer() {
         <p>
           © {new Date().getFullYear()} {siteConfig.name}. Tous droits réservés.
         </p>
-        <p>Photographies : {siteConfig.name}</p>
+        <p>
+          Photographies : {siteConfig.name}
+          <span className="text-ivory/35"> · Made by imskhdev</span>
+        </p>
       </div>
     </footer>
   );
