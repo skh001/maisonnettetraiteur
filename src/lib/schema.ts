@@ -14,7 +14,7 @@ export function businessSchema() {
     url: siteConfig.url,
     description: siteConfig.description,
     image: `${siteConfig.url}/opengraph-image`,
-    logo: `${siteConfig.url}/icon.svg`,
+    logo: `${siteConfig.url}/images/logo/logo.png`,
     telephone: contact.phone,
     email: contact.email,
     priceRange: "€€€",

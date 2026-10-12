@@ -36,7 +36,7 @@ export default async function OpengraphImage() {
           color: "#faf7f2",
         }}
       >
-        <div style={{ fontSize: 88, lineHeight: 1 }}>Maisonnette Traiteur</div>
+        <div style={{ fontSize: 88, lineHeight: 1 }}>{siteConfig.name}</div>
         <div style={{ fontSize: 34, marginTop: 24, color: "#dcc79e" }}>L&apos;art de recevoir, fait maison.</div>
       </div>
     ),

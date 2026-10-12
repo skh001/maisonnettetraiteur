@@ -23,7 +23,7 @@ export type CategoryGallery = GalleryCategory & {
 const IMAGES_ROOT = path.join(process.cwd(), "public", "images");
 const EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif"]);
 const ALT_FILE = "_alts.json";
-const BRAND = "Maisonnette Traiteur";
+const BRAND = "La Maisonnette Traiteur";
 
 const collator = new Intl.Collator("fr", { numeric: true, sensitivity: "base" });
 

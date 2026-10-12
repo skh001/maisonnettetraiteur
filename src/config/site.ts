@@ -3,10 +3,10 @@
  * ⚠️ Remplacez les valeurs marquées TODO par les informations réelles.
  */
 export const siteConfig = {
-  name: "Maisonnette Traiteur",
+  name: "La Maisonnette Traiteur",
   url: "https://lamaisonnette-traiteur.fr",
   locale: "fr_FR",
-  title: "Maisonnette Traiteur — Traiteur événementiel et pâtisserie marocaine",
+  title: "La Maisonnette Traiteur — Traiteur événementiel et pâtisserie marocaine",
   description:
     "Traiteur haut de gamme pour mariages, fiançailles et réceptions : cuisine faite maison, produits frais, pâtisseries marocaines et animations culinaires sur mesure.",
   keywords: [

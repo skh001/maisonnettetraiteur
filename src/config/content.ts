@@ -168,7 +168,7 @@ export const pillars = [
   },
 ];
 
-/** « Pourquoi Maisonnette » : les engagements affichés sous le hero. Icônes dans components/home/Promises. */
+/** « Pourquoi La Maisonnette » : les engagements affichés sous le hero. Icônes dans components/home/Promises. */
 export const promises = [
   { icon: "leaf", title: "Produits frais", text: "De saison, achetés pour votre date." },
   { icon: "chef", title: "Fait maison", text: "Sans produits industriels, tout vient de notre cuisine." },

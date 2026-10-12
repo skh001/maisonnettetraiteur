@@ -21,7 +21,7 @@ export function Promises() {
       <div className={container}>
         <Reveal y={40} className="border border-gold/20 bg-ivory shadow-luxe-lg lg:-mt-28">
           <div className="flex flex-col gap-3 border-b border-charcoal/8 px-6 py-7 sm:flex-row sm:items-center sm:justify-between sm:px-10">
-            <Eyebrow>Pourquoi Maisonnette</Eyebrow>
+            <Eyebrow>Pourquoi La Maisonnette</Eyebrow>
             <h2 id="promises-title" className="font-serif text-2xl font-light text-charcoal md:text-3xl">
               Six engagements, à chaque réception.
             </h2>

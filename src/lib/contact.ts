@@ -40,7 +40,7 @@ export async function submitContact(values: ContactValues, signal: AbortSignal):
   const data = new FormData();
   data.append("access_key", WEB3FORMS_ACCESS_KEY);
   data.append("subject", `Demande de devis : ${eventLabel}, ${values.name}`);
-  data.append("from_name", "Site Maisonnette Traiteur");
+  data.append("from_name", "Site La Maisonnette Traiteur");
   data.append("name", values.name);
   data.append("phone", values.phone);
   data.append("email", values.email);

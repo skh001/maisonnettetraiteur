@@ -11,7 +11,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 export const metadata = pageMetadata({
   title: "Galerie",
   description:
-    "Entrées, plats principaux, desserts, commandes à emporter, buffets, animations, assise de thé et gâteaux marocains : les créations faites maison de Maisonnette Traiteur en images.",
+    "Entrées, plats principaux, desserts, commandes à emporter, buffets, animations, assise de thé et gâteaux marocains : les créations faites maison de La Maisonnette Traiteur en images.",
   path: "/galerie",
 });
 

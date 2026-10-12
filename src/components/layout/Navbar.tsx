@@ -56,7 +56,7 @@ export function Navbar() {
           <Logo tone={solid ? "dark" : "light"} />
         </Link>
 
-        <ul className="hidden items-center gap-9 md:flex">
+        <ul className="hidden items-center gap-5 md:flex lg:gap-9">
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link
@@ -81,7 +81,7 @@ export function Navbar() {
         <div className="flex items-center gap-3">
           <Link
             href="/contact"
-            className={cn(buttonClasses(solid ? "outline-dark" : "outline-light", "hidden min-h-11 px-6 md:inline-flex"))}
+            className={cn(buttonClasses(solid ? "outline-dark" : "outline-light", "min-h-11 px-6 max-md:hidden"))}
           >
             Demander un devis
           </Link>
