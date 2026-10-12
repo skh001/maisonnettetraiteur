@@ -4,7 +4,7 @@
  */
 export const siteConfig = {
   name: "Maisonnette Traiteur",
-  url: "https://maisonnette-traiteur.fr",
+  url: "https://lamaisonnette-traiteur.fr",
   locale: "fr_FR",
   title: "Maisonnette Traiteur — Traiteur événementiel et pâtisserie marocaine",
   description:
