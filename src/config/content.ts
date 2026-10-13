@@ -135,15 +135,20 @@ export const services: Service[] = [
   },
 ];
 
-/** Section « Notre histoire » de l'accueil : un paragraphe par entrée. */
-export const story = [
-  "La cuisine a toujours été une passion pour moi.",
-  "En 2019, j’ai commencé petit à petit à partager mes créations et à prendre mes premières commandes.",
-  "Les encouragements, le bouche-à-oreille et la confiance de mes clients m’ont permis d’aller toujours plus loin.",
-  "Le nom « La Maisonnette » n’a pas été choisi au hasard.",
-  "Il vient du « fait maison », qui est depuis le début au cœur de ma cuisine.",
-  "D’une passion est née une véritable activité de traiteur événementiel, construite pas à pas, avec beaucoup de travail, de cœur et toujours cet esprit fait maison qui fait l’identité de La Maisonnette.",
-];
+/** Section « Notre histoire » de l'accueil : la fondatrice. Photo : images/fondatrice/. */
+export const founder = {
+  eyebrow: "Notre histoire",
+  title: "Derrière La Maisonnette",
+  subtitle: "Une passion pour la cuisine, le partage et les moments inoubliables.",
+  story: [
+    "Derrière La Maisonnette, il y a moi, Saloua, et une passion pour la cuisine et le plaisir de recevoir.",
+    "En 2019, j’ai donné vie à cette passion en lançant mon activité. Le nom « La Maisonnette » reflète ce qui me tient à cœur : le fait maison, la générosité et la convivialité.",
+    "À travers une cuisine aux saveurs marocaines et méditerranéennes, je vous accompagne pour vos mariages, vos événements familiaux et vos réceptions professionnelles. Chaque prestation est imaginée avec vous, selon vos envies, avec une attention particulière portée aux saveurs et à la présentation.",
+    "Mon souhait : vous permettre de profiter pleinement de vos invités autour d’un repas gourmand, chaleureux et préparé avec soin.",
+  ],
+  signature: "Saloua",
+  role: "Fondatrice de La Maisonnette",
+};
 
 export const pillars = [
   {

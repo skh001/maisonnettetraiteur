@@ -192,6 +192,12 @@ export const getAboutImages = cache(async () => {
   return fallback.filter((img, i, arr): img is SiteImage => !!img && arr.findIndex((x) => x?.src === img.src) === i);
 });
 
+/** Photo de la section « Notre histoire » : première image du dossier « fondatrice ». */
+export const getFounderImage = cache(async () => {
+  const [img] = await getFolderImages("fondatrice", "Notre histoire");
+  return img ? { ...img, alt: `Saloua, fondatrice de ${BRAND}, en cuisine` } : null;
+});
+
 /**
  * Défilement infini : toutes les photos du dossier « animated » (01.jpg, 02.jpg…, dans l'ordre des noms),
  * sinon une sélection alternée de chaque catégorie, limitée à `limit` photos.

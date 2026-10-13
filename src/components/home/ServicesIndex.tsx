@@ -13,7 +13,7 @@ export async function ServicesIndex() {
   const [image] = await getAmbianceImages("services");
 
   return (
-    <section aria-labelledby="services-index-title" className="pb-20 md:pb-32">
+    <section id="prestations" aria-labelledby="services-index-title" className="scroll-mt-24 pb-20 md:pb-32">
       <Ornament className="mb-20 md:mb-28" />
       <div className={cn(container, "grid items-center gap-14 lg:grid-cols-12 lg:gap-10")}>
         {image && (

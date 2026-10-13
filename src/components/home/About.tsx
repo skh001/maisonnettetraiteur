@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { pillars, story } from "@/config/content";
+import { pillars } from "@/config/content";
 import { getAboutImages } from "@/lib/images";
 import { container, cn } from "@/lib/utils";
 import { Reveal } from "@/components/ui/Reveal";
@@ -42,15 +42,10 @@ export async function About() {
 
         <div className="lg:col-span-5 lg:col-start-8 lg:pt-10">
           <Reveal>
-            <Eyebrow className="mb-5">Notre histoire</Eyebrow>
+            <Eyebrow className="mb-5">Notre philosophie</Eyebrow>
             <h2 id="about-title" className="font-serif text-[2.5rem] font-light leading-[1.02] text-charcoal sm:text-5xl lg:text-6xl">
               Une cuisine de famille, servie comme à la maison.
             </h2>
-            {story.map((paragraph, i) => (
-              <p key={i} className={cn("font-serif text-xl leading-relaxed text-ink md:text-2xl", i === 0 ? "mt-8" : "mt-4")}>
-                {paragraph}
-              </p>
-            ))}
           </Reveal>
 
           <dl className="mt-12 grid gap-x-8 gap-y-8 sm:grid-cols-2">

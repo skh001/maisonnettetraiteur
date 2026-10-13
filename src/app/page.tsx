@@ -2,6 +2,7 @@ import { Hero } from "@/components/home/Hero";
 import { Promises } from "@/components/home/Promises";
 import { Showcase } from "@/components/home/Showcase";
 import { Stations } from "@/components/home/Stations";
+import { Founder } from "@/components/home/Founder";
 import { About } from "@/components/home/About";
 import { ServicesIndex } from "@/components/home/ServicesIndex";
 import { GalleryTeaser } from "@/components/home/GalleryTeaser";
@@ -21,6 +22,7 @@ export default function HomePage() {
       <Hero />
       <Promises />
       <Showcase />
+      <Founder />
       <About />
       <GalleryTeaser />
       <ServicesIndex />

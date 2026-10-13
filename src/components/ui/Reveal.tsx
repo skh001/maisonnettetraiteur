@@ -9,15 +9,17 @@ type RevealProps = {
   className?: string;
   delay?: number;
   y?: number;
+  /** Échelle de départ (ex. 1.08 pour un léger zoom avant). */
+  scale?: number;
 };
 
 /** Apparition douce au défilement, jouée une seule fois. */
-export function Reveal({ children, className, delay = 0, y = 24 }: RevealProps) {
+export function Reveal({ children, className, delay = 0, y = 24, scale = 1 }: RevealProps) {
   return (
     <m.div
       className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y, scale }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "0px 0px -10% 0px" }}
       transition={{ duration: 1, ease: EASE, delay }}
     >
