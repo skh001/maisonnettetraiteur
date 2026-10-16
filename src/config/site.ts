@@ -27,7 +27,7 @@ export const siteConfig = {
     phoneDisplay: "07 85 68 87 01",
     /** Lien WhatsApp Business (message pré-rempli configuré dans l'application). */
     whatsapp: "https://wa.me/message/JDVNLZ26MRLFK1",
-    email: "contact@maisonnette-traiteur.fr",
+    email: "contact@lamaisonnette-traiteur.fr",
   },
   address: {
     // Laissez vide ce qui ne doit pas apparaître publiquement
